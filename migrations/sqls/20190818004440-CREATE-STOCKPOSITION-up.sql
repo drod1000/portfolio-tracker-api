@@ -1,0 +1,10 @@
+CREATE TABLE StockPosition (
+  PositionId INT AUTO_INCREMENT PRIMARY KEY,
+  StockId INT NOT NULL,
+  Quantity DECIMAL(5,2) NOT NULL,
+  BuyDate DATE NOT NULL,
+  BuyPrice DECIMAL(6,2) NOT NULL,
+  SellDate DATE NULL,
+  SellPrice DECIMAL(6,2) NULL,
+  CONSTRAINT FK_Position_Stock_StockId FOREIGN KEY (StockId) REFERENCES Stock(StockId) ON DELETE CASCADE
+);
