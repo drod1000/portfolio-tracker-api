@@ -2,6 +2,7 @@ require('dotenv').config()
 const mysql = require('mysql')
 const express = require('express')
 const app = express()
+var home = require('./controllers/home')
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -18,8 +19,6 @@ connection.connect(err => {
   console.log('connected as id ' + connection.threadId);
 })
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-})
+app.use('/', home)
 
 app.listen(3000)
