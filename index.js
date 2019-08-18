@@ -2,7 +2,9 @@ require('dotenv').config()
 const mysql = require('mysql')
 const express = require('express')
 const app = express()
-var home = require('./controllers/home')
+const home = require('./controllers/home')
+const position = require('./controllers/position')
+const watchlist = require('./controllers/watchlist')
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -20,5 +22,7 @@ connection.connect(err => {
 })
 
 app.use('/', home)
+app.use('/position', position)
+app.use('/watchlist', watchlist)
 
 app.listen(3000)
