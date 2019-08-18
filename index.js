@@ -1,6 +1,9 @@
+// DB Connection
 require('dotenv').config()
 const mysql = require('mysql')
+// Express
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const home = require('./controllers/home')
 const position = require('./controllers/position')
@@ -21,6 +24,7 @@ connection.connect(err => {
   console.log('connected as id ' + connection.threadId);
 })
 
+app.use(bodyParser.json())
 app.use('/', home)
 app.use('/position', position)
 app.use('/watchlist', watchlist)
