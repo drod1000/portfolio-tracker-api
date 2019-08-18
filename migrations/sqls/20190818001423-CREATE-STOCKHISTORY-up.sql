@@ -1,0 +1,8 @@
+CREATE TABLE StockHistory (
+  StockHistoryId INT AUTO_INCREMENT PRIMARY KEY,
+  StockId INT NOT NULL,
+  RecordDate DATE NOT NULL,
+  OpenPrice DECIMAL(6,2) NOT NULL,
+  ClosePrice DECIMAL(6,2) NOT NULL,
+  CONSTRAINT FK_StockHistory_Stock_StockId FOREIGN KEY (StockId) REFERENCES Stock(StockId) ON DELETE CASCADE
+);
