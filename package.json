@@ -19,8 +19,6 @@
   "homepage": "https://github.com/drod1000/portfolio-tracker-api#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "db-migrate": "^0.11.6",
-    "db-migrate-mysql": "^1.1.10",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "knex": "^0.19.2",
