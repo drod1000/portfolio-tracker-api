@@ -2,13 +2,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import mysql from 'mysql';
-// Express
-import express from 'express';
-import bodyParser from 'body-parser';
-const app = express();
-const home = require('./controllers/home');
-const position = require('./controllers/position');
-const watchlist = require('./controllers/watchlist');
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -25,9 +18,15 @@ connection.connect(err => {
   console.log('connected as id ' + connection.threadId);
 });
 
-app.use(bodyParser.json());
-app.use('/', home);
-app.use('/position', position);
-app.use('/watchlist', watchlist);
+import express from 'express';
 
-app.listen(3000);
+async function startServer() {
+  const app = express();
+  await require('./initializers').default({ expressApp: app });
+
+  app.listen(3000, () => {
+    console.log('Listening on port 3000');
+  });
+}
+
+startServer();
