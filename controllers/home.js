@@ -1,12 +1,12 @@
-const express = require('express')
-const router = express.Router()
+import express from 'express';
+const router = express.Router();
 
 router.get('/', function (req, res) {
-  res.send('Home Page')
-})
+  res.send('Home Page');
+});
 
 router.get('/about', function (req, res) {
-  res.send('Home Page # About')
-})
+  res.send('Home Page # About');
+});
 
-module.exports = router
+module.exports = router;
