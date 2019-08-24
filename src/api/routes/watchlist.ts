@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 import WorldTradingData from '../../services/world-trading-data';
 
@@ -12,7 +12,7 @@ export default (app) => {
   });
 
   // TODO: Add async middleware to make this more readable
-  router.post('/', (req, res) => {
+  router.post('/', (req: Request, res: Response) => {
     // TODO: Check if history for it already exists
     const worldTradingData = new WorldTradingData();
 

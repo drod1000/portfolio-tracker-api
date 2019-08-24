@@ -1,18 +1,18 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 import WorldTradingData from '../../services/world-trading-data';
 
 const router = Router();
 
-export default (app) => {
+export default (app: Router) => {
   app.use('/positions', router);
 
-  router.get('/', (req, res) => {
+  router.get('/', (req: Request, res: Response) => {
     res.send("Positions");
   });
 
   // TODO: Add async middleware to make this more readable
-  router.post('/', (req, res) => {
+  router.post('/', (req: Request, res: Response) => {
     // TODO: Check if history for it already exists
     const worldTradingData = new WorldTradingData();
 

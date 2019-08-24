@@ -4,14 +4,17 @@ import reduce from 'lodash/reduce';
 require('dotenv').config();
 
 class WorldTradingData {
+  private _urlPrefix: string;
+  private _apiToken: string;
+  private _startDate: string;
   constructor() {
-    this.urlPrefix = 'https://api.worldtradingdata.com/api/v1';
-    this.apiToken = process.env.WORLD_TRADING_DATA_API_KEY;
-    this.startDate = '2014-01-01';
+    this._urlPrefix = 'https://api.worldtradingdata.com/api/v1';
+    this._apiToken = process.env.WORLD_TRADING_DATA_API_KEY;
+    this._startDate = '2014-01-01';
   }
 
   async getFullHistory(stockSymbol) {
-    const response = await axios.get(`${this.urlPrefix}/history?symbol=${stockSymbol}&date_from=${this.startDate}&api_token=${this.apiToken}`);
+    const response = await axios.get(`${this._urlPrefix}/history?symbol=${stockSymbol}&date_from=${this._startDate}&api_token=${this._apiToken}`);
     return response.data.history;
   }
 
@@ -27,7 +30,7 @@ class WorldTradingData {
 
   async _getPairSingleDayHistory(symbols, date) {
     const symbolParams = symbols.join(',');
-    const response = await axios.get(`${this.urlPrefix}/history_multi_single_day?symbol=${symbolParams}&date=${date}&api_token=${this.apiToken}`);
+    const response = await axios.get(`${this._urlPrefix}/history_multi_single_day?symbol=${symbolParams}&date=${date}&api_token=${this._apiToken}`);
 
     return response.data.data;
   }
