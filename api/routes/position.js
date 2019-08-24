@@ -32,7 +32,7 @@ export default (app) => {
       })
       .catch(error => {
         res.status(400).send({
-          message: "Unable to find data for given stock. Please confirm that the symbol you provided is correct"
+          message: "Unable to find data for given stock. Please confirm that the symbol you provided is correct."
         });
       });
   });
