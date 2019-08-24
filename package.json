@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "start dev": "nodemon ./src/index.js"
+    "start": "node ./build/index.js",
+    "start dev": "nodemon ./build/index.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "typedi": "^0.8.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.1",
     "nodemon": "^1.19.1"
   }
 }
