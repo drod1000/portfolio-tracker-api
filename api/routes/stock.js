@@ -10,7 +10,7 @@ export default (app) => {
   // TODO: Move this to a job
   router.get('/single-day-history', (req, res) => {
     // TODO: Get from Stock DB;
-    const symbols = ["AAPL", "WFC"];
+    const symbols = ["AAPL", "WFC", "DIS", "TGT", "WM"];
     const worldTradingData = new WorldTradingData();
 
     worldTradingData.getMultipleSingleDayHistory(symbols, req.query.date)
@@ -18,7 +18,7 @@ export default (app) => {
         const responseContent = Object.keys(data)
           .map(symbol => {
             return {
-              StockSymbol: symbol,
+              Symbol: symbol,
               Price: data[symbol].close
             };
           });
