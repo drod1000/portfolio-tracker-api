@@ -1,4 +1,6 @@
 import axios from 'axios';
+import chunk from 'lodash/chunk';
+import reduce from 'lodash/reduce';
 require('dotenv').config();
 
 class WorldTradingData {
@@ -14,25 +16,13 @@ class WorldTradingData {
   }
 
   async getMultipleSingleDayHistory(symbols, date) {
-    const symbolPairs = [];
-    let currentPair = [];
+    const symbolPairs = chunk(symbols, 2);
+    const responsePromises = symbolPairs.map(p => this._getPairSingleDayHistory(p, date));
+    const responses = await Promise.all(responsePromises);
+    const flattenedResponse = reduce(responses, (result, current) => Object.assign(result, current), {});
+    const result = new Promise(resolve => resolve(flattenedResponse));
 
-    for (let i = 0; i < symbols.length; i++) {
-      const currentSymbol = symbols[i];
-      currentPair.push(currentSymbol);
-      if (i % 2 === 1 || i === symbols.length - 1) {
-        symbolPairs.push(currentPair);
-        currentPair = [];
-      }
-    }
-
-    const responses = symbolPairs.map(p => this._getPairSingleDayHistory(p, date));
-    const all = await Promise.all(responses);
-    const finalResponse = all.reduce(((r, c) => Object.assign(r, c)), {});
-
-    return new Promise(resolve => {
-      resolve(finalResponse);
-    });
+    return result;
   }
 
   async _getPairSingleDayHistory(symbols, date) {
