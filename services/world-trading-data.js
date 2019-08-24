@@ -12,6 +12,13 @@ class WorldTradingData {
     const response = await axios.get(`${this.urlPrefix}/history?symbol=${stockSymbol}&date_from=${this.startDate}&api_token=${this.apiToken}`);
     return response.data.history;
   }
+
+  async getMultipleSingleDayHistory(symbols, date) {
+    const symbolParams = symbols.join(',');
+    const response = await axios.get(`${this.urlPrefix}/history_multi_single_day?symbol=${symbolParams}&date=${date}&api_token=${this.apiToken}`);
+    return response.data.data;
+  }
+
 }
 
 export default WorldTradingData;
