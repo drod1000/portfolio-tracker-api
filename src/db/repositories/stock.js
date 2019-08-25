@@ -1,3 +1,6 @@
+import { Service } from "typedi";
+
+@Service()
 class StockRepository {
   constructor(container) {
     this._knexConnection = container.get('knex.connection');
