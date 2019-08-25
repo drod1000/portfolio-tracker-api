@@ -1,5 +1,5 @@
 
-export function up(knex) {
+exports.up = function(knex) {
   return knex.schema.createTable('StockHistory', function(table) {
     table.increments('StockHistory');
     table.integer('StockId').notNullable().unsigned();
@@ -7,9 +7,9 @@ export function up(knex) {
     table.date('RecordDate').notNullable();
     table.decimal('OpenPrice').notNullable();
     table.decimal('ClosePrice').notNullable();
-  })
-}
+  });
+};
 
-export function down(knex) {
+exports.down = function(knex) {
   return knex.schema.dropTable('StockHistory');
-}
+};
