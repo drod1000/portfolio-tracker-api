@@ -1,5 +1,5 @@
 
-exports.up = function(knex) {
+export function up(knex) {
   return knex.schema.createTable('WatchlistStock', function(table) {
     table.increments('WatchlistStockId');
     table.integer('StockId').notNullable().unsigned();
@@ -7,8 +7,8 @@ exports.up = function(knex) {
     table.date('WatchDate').notNullable();
     table.decimal('WatchPrice').notNullable();
   })
-};
+}
 
-exports.down = function(knex) {
+export function down(knex) {
   return knex.schema.dropTable('WatchlistStock');
-};
+}
