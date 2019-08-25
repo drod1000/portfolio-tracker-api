@@ -9,7 +9,7 @@ exports.up = function(knex) {
     table.decimal('BuyPrice').notNullable();
     table.date('SellDate');
     table.decimal('SellPrice');
-  })
+  });
 };
 
 exports.down = function(knex) {

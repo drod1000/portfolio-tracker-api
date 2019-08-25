@@ -6,7 +6,7 @@ exports.up = function(knex) {
     table.foreign('StockId').references('Stock.StockId');
     table.date('WatchDate').notNullable();
     table.decimal('WatchPrice').notNullable();
-  })
+  });
 };
 
 exports.down = function(knex) {

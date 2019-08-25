@@ -1,14 +1,14 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 import WorldTradingData from '../../services/world-trading-data';
 
 const router = Router();
 
-export default (app) => {
+export default (app: Router) => {
   app.use('/stock', router);
 
   // TODO: Move this to a job
-  router.get('/single-day-history', (req, res) => {
+  router.get('/single-day-history', (req: Request, res: Response) => {
     // TODO: Get from Stock DB;
     const symbols = ["AAPL", "WFC", "DIS", "TGT", "WM"];
     const worldTradingData = new WorldTradingData();

@@ -7,7 +7,7 @@ exports.up = function(knex) {
     table.date('RecordDate').notNullable();
     table.decimal('OpenPrice').notNullable();
     table.decimal('ClosePrice').notNullable();
-  })
+  });
 };
 
 exports.down = function(knex) {
