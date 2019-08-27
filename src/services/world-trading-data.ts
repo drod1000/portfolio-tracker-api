@@ -1,8 +1,10 @@
 import axios from 'axios';
 import chunk from 'lodash/chunk';
 import reduce from 'lodash/reduce';
+import { Service } from 'typedi';
 require('dotenv').config();
 
+@Service()
 class WorldTradingDataService {
   private _urlPrefix: string;
   private _apiToken: string;
