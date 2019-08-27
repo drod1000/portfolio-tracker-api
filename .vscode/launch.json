@@ -5,7 +5,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Express App",
-      "program": "${workspaceFolder}/index.js"
+      "program": "${workspaceFolder}/build/index.js"
     }
   ]
 }
