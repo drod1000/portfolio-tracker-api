@@ -3,7 +3,7 @@ import chunk from 'lodash/chunk';
 import reduce from 'lodash/reduce';
 require('dotenv').config();
 
-class WorldTradingData {
+class WorldTradingDataService {
   private _urlPrefix: string;
   private _apiToken: string;
   private _startDate: string;
@@ -37,4 +37,4 @@ class WorldTradingData {
 
 }
 
-export default WorldTradingData;
+export default WorldTradingDataService;

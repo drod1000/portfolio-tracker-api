@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 
-import WorldTradingData from '../../services/world-trading-data';
+import WorldTradingDataService from '../../services/world-trading-data';
 
 const router = Router();
 
@@ -14,7 +14,7 @@ export default (app: Router) => {
   // TODO: Add async middleware to make this more readable
   router.post('/', (req: Request, res: Response) => {
     // TODO: Check if history for it already exists
-    const worldTradingData = new WorldTradingData();
+    const worldTradingData = new WorldTradingDataService();
 
     worldTradingData.getFullHistory(req.body.StockSymbol)
       .then(history => {
