@@ -14,35 +14,24 @@ class StockPositionService {
   @Inject()
   private _stockHistoryRepository: StockHistoryRepository;
   @Inject()
-  private _stockPositionRepository: StockPositionRepository
+  private _stockPositionRepository: StockPositionRepository;
   @Inject()
-  private _worldTradingDataService: WorldTradingDataService
+  private _worldTradingDataService: WorldTradingDataService;
 
   async addStockPosition(inputDto: PostAddStockPosition) {
     let stockId: number;
     let currentPrice: number;
     const stock = await this._stockRepository.getStockBySymbol(inputDto.StockSymbol);
+
     if (stock) {
       stockId = stock.StockId;
       currentPrice = await this._stockHistoryRepository.getMostRecentPriceByStockId(stock.StockId);
-
     } else {
-      const stockHistory = await this._worldTradingDataService.getFullHistoryBySymbol(inputDto.StockSymbol);
-      const stockInsertResult = await this._stockRepository.insertStock(inputDto.StockSymbol);
-      stockId = stockInsertResult[0];
-      const stockHistoryDates = Object.keys(stockHistory);
-      const stockHistoryInsert: StockHistoryInsert[] = stockHistoryDates.map(date => {
-        return {
-          StockId: stockId,
-          RecordDate: date,
-          OpenPrice: stockHistory[date].open,
-          ClosePrice: stockHistory[date].close
-        };
-      });
-
-      const stockHistoryInsertResult = await this._stockHistoryRepository.insertStockHistory(stockHistoryInsert);
-      currentPrice = stockHistoryInsert[stockHistoryInsert.length - 1 ].ClosePrice;
+      const stockAndHistoryInsertResult = await this._insertStockAndFullHistory(inputDto.StockSymbol);
+      stockId = stockAndHistoryInsertResult.StockId;
+      currentPrice = stockAndHistoryInsertResult.CurrentPrice;
     }
+
     const stockPositionInsert: StockPositionInsert = {
       StockId: stockId,
       Quantity: inputDto.Quantity,
@@ -60,10 +49,30 @@ class StockPositionService {
       CurrentPrice: currentPrice
     };
 
-    return new Promise(resolve => {
-      resolve(result);
-    });
+    return new Promise(resolve => resolve(result));
   }
+
+  private async _insertStockAndFullHistory(stockSymbol: string): Promise<any> {
+    const stockHistory = await this._worldTradingDataService.getFullHistoryBySymbol(stockSymbol);
+    const stockInsertResult = await this._stockRepository.insertStock(stockSymbol);
+
+    const stockHistoryInsert: StockHistoryInsert[] = Object.keys(stockHistory).map(date => {
+      return {
+        StockId: stockInsertResult[0],
+        RecordDate: date,
+        OpenPrice: stockHistory[date].open,
+        ClosePrice: stockHistory[date].close
+      };
+    });
+    await this._stockHistoryRepository.insertStockHistory(stockHistoryInsert);
+
+    const result = {
+      StockId: stockInsertResult[0],
+      CurrentPrice: stockHistoryInsert[stockHistoryInsert.length - 1 ].ClosePrice
+    }
+    return new Promise(resolve => resolve(result));
+  }
+
 }
 
 export default StockPositionService;

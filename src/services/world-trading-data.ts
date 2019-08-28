@@ -9,6 +9,7 @@ class WorldTradingDataService {
   private _urlPrefix: string;
   private _apiToken: string;
   private _startDate: string;
+
   constructor() {
     this._urlPrefix = 'https://api.worldtradingdata.com/api/v1';
     this._apiToken = process.env.WORLD_TRADING_DATA_API_KEY;
