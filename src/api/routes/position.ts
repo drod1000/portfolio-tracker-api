@@ -16,7 +16,7 @@ export default (app: Router) => {
     // TODO: Check if history for it already exists
     const worldTradingData = new WorldTradingDataService();
 
-    worldTradingData.getFullHistory(req.body.StockSymbol)
+    worldTradingData.getFullHistoryBySymbol(req.body.StockSymbol)
       .then(history => {
         // TODO: Add StockHistory to DB
         // TODO: Add StockPosition to DB
