@@ -1,6 +1,6 @@
 import { Service, Inject } from 'typedi';
 
-import { WatchlistStockInsert } from '../dtos/watchlist-stock-insert';
+import WatchlistStockInsert from '../dtos/watchlist-stock-insert';
 
 @Service()
 class WatchlistStockRepository {

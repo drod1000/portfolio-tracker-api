@@ -1,4 +1,4 @@
-export interface StockHistoryInsert {
+export default interface StockHistoryInsert {
   StockId: number;
   RecordDate: string;
   OpenPrice: number;

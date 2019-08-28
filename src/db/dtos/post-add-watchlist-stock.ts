@@ -1,3 +1,3 @@
-export interface PostAddWatchlistStock {
+export default interface PostAddWatchlistStock {
   StockSymbol: string;
 }

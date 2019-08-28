@@ -1,6 +1,6 @@
 import { Service, Inject } from 'typedi';
 
-import { StockHistoryInsert } from '../dtos/stock-history-insert';
+import StockHistoryInsert from '../dtos/stock-history-insert';
 
 @Service()
 class StockHistoryRepository {

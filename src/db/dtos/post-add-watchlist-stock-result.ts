@@ -1,4 +1,4 @@
-export interface PostAddWatchlistStockResult {
+export default interface PostAddWatchlistStockResult {
   WatchlistStockId: number;
   StockSymbol: string;
   WatchDate: Date;

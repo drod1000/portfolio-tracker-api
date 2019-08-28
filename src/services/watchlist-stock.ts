@@ -2,10 +2,12 @@ import { Service, Inject } from 'typedi';
 
 import { StockRepository, StockHistoryRepository, WatchlistStockRepository } from '../db/repositories';
 import WorldTradingDataService from './world-trading-data';
-import { PostAddWatchlistStockResult } from '../db/dtos/post-add-watchlist-stock-result';
-import { WatchlistStockInsert } from '../db/dtos/watchlist-stock-insert';
-import { PostAddWatchlistStock } from '../db/dtos/post-add-watchlist-stock';
-import { StockHistoryInsert } from '../db/dtos/stock-history-insert';
+import {
+  PostAddWatchlistStockResult,
+  WatchlistStockInsert,
+  PostAddWatchlistStock,
+  StockHistoryInsert
+} from '../db/dtos';
 
 @Service()
 class WatchlistStockService {

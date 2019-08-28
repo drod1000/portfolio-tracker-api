@@ -1,4 +1,4 @@
-export interface PostAddStockPosition {
+export default interface PostAddStockPosition {
   StockSymbol: string;
   Quantity: number;
   BuyDate: Date;

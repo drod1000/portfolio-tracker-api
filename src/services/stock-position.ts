@@ -2,10 +2,12 @@ import { Service, Inject } from 'typedi';
 
 import { StockRepository, StockHistoryRepository, StockPositionRepository } from '../db/repositories';
 import WorldTradingDataService from './world-trading-data';
-import { PostAddStockPositionResult } from '../db/dtos/post-add-stock-position-result';
-import { PostAddStockPosition } from '../db/dtos/post-add-stock-position';
-import { StockHistoryInsert } from '../db/dtos/stock-history-insert';
-import { StockPositionInsert } from '../db/dtos/stock-position-insert';
+import {
+  PostAddStockPositionResult,
+  PostAddStockPosition,
+  StockHistoryInsert,
+  StockPositionInsert
+} from '../db/dtos';
 
 @Service()
 class StockPositionService {
