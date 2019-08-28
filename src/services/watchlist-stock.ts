@@ -20,7 +20,7 @@ class WatchlistStockService {
   @Inject()
   private _worldTradingDataService: WorldTradingDataService;
 
-  async addStockPosition(inputDto: PostAddWatchlistStock) {
+  async addWatchlistStock(inputDto: PostAddWatchlistStock) {
     let stockId: number;
     let currentPrice: number;
     const stock = await this._stockRepository.getStockBySymbol(inputDto.StockSymbol);
