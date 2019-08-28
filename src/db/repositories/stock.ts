@@ -17,7 +17,7 @@ class StockRepository {
   }
 
   async getStockBySymbol(stockSymbol: string){
-    const result = this._knex.where('StockSymbol', stockSymbol).first();
+    const result = this._knex('Stock').where('StockSymbol', stockSymbol).first();
     return result;
   }
 }

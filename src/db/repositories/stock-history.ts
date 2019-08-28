@@ -12,6 +12,15 @@ class StockHistoryRepository {
     const result = this._knex('StockHistory').insert(history);
     return result;
   }
+
+  async getMostRecentPriceByStockId(stockId: number) {
+    const result = this._knex('StockHistory')
+      .where('StockId', stockId)
+      .orderBy('RecordDate', 'desc')
+      .first();
+
+    return result;
+  }
 }
 
 export default StockHistoryRepository;
