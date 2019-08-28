@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 
-import WorldTradingData from '../../services/world-trading-data';
+import WorldTradingDataService from '../../services/world-trading-data';
 
 const router = Router();
 
@@ -11,7 +11,7 @@ export default (app: Router) => {
   router.get('/single-day-history', (req: Request, res: Response) => {
     // TODO: Get from Stock DB;
     const symbols = ["AAPL", "WFC", "DIS", "TGT", "WM"];
-    const worldTradingData = new WorldTradingData();
+    const worldTradingData = new WorldTradingDataService();
 
     worldTradingData.getMultipleSingleDayHistory(symbols, req.query.date)
       .then(data => {
