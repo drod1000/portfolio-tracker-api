@@ -46,7 +46,7 @@ class StockPositionService {
     const stockPositionInsert: StockPositionInsert = {
       StockId: stockId,
       Quantity: inputDto.Quantity,
-      BuyDate: new Date().toDateString(),
+      BuyDate: inputDto.BuyDate.toDateString(),
       BuyPrice: inputDto.BuyPrice
     };
     const stockPositionInsertResult = await this._stockPositionRepository.insertStockPosition(stockPositionInsert);
