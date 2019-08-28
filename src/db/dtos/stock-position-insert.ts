@@ -1,6 +1,6 @@
 export interface StockPositionInsert {
   StockId: number;
   Quantity: number;
-  BuyDate: Date;
+  BuyDate: string;
   BuyPrice: number;
 }

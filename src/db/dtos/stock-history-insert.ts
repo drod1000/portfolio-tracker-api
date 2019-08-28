@@ -1,6 +1,6 @@
 export interface StockHistoryInsert {
   StockId: number;
-  RecordDate: Date;
+  RecordDate: string;
   OpenPrice: number;
   ClosePrice: number;
 }

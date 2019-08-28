@@ -1,5 +1,5 @@
 export interface WatchlistStockInsert {
   StockId: number;
-  WatchDate: Date;
+  WatchDate: string;
   WatchPrice: number;
 }
