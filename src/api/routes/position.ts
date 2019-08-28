@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
+import { Container } from 'typedi';
 
-import WorldTradingDataService from '../../services/world-trading-data';
+import StockPositionService from '../../services/stock-position';
 
 const router = Router();
 
@@ -13,26 +14,12 @@ export default (app: Router) => {
 
   // TODO: Add async middleware to make this more readable
   router.post('/', (req: Request, res: Response) => {
-    // TODO: Check if history for it already exists
-    const worldTradingData = new WorldTradingDataService();
-
-    worldTradingData.getFullHistoryBySymbol(req.body.StockSymbol)
-      .then(history => {
-        // TODO: Add StockHistory to DB
-        // TODO: Add StockPosition to DB
-        const stockPostionId = 1;
-        const historyDates = Object.keys(history);
-        const mostRecentDate = historyDates[0];
-        const mostRecentDateData = history[mostRecentDate];
-
-        res.status(201).send({
-          StockPositionId: stockPostionId,
-          CurrentPrice: mostRecentDateData.close
-        });
-      })
+    const stockPositionService: StockPositionService = Container.get(StockPositionService);
+    stockPositionService.addStockPosition(req.body)
+      .then(addResult => res.status(201).send(addResult))
       .catch(error => {
         res.status(400).send({
-          message: "Unable to find data for given stock. Please confirm that the symbol you provided is correct."
+          message: `Something went wrong: ${error}`
         });
       });
   });
