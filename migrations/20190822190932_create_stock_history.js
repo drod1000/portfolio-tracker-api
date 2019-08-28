@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('StockHistory', function(table) {
-    table.increments('StockHistory');
+    table.increments('StockHistoryId');
     table.integer('StockId').notNullable().unsigned();
     table.foreign('StockId').references('Stock.StockId');
     table.date('RecordDate').notNullable();
