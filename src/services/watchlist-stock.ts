@@ -36,16 +36,16 @@ class WatchlistStockService {
 
     const watchlistStockInsert: WatchlistStockInsert = {
       StockId: stockId,
-      WatchDate: new Date().toString(),
-      WatchPrice: currentPrice
+      WatchDate: inputDto.WatchDate.toString(),
+      WatchPrice: inputDto.WatchPrice
     };
     const watchlistStockInsertResult = await this._watchlistStockRepository.insertWatchlistStock(watchlistStockInsert);
 
     const result: PostAddWatchlistStockResult = {
       WatchlistStockId: watchlistStockInsertResult[0],
       StockSymbol: inputDto.StockSymbol,
-      WatchDate: new Date(watchlistStockInsert.WatchDate),
-      WatchPrice: currentPrice,
+      WatchDate: inputDto.WatchDate,
+      WatchPrice: inputDto.WatchPrice,
       CurrentPrice: currentPrice
     };
 
