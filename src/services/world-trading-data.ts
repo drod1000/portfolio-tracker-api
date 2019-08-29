@@ -13,7 +13,7 @@ class WorldTradingDataService {
   constructor() {
     this._urlPrefix = 'https://api.worldtradingdata.com/api/v1';
     this._apiToken = process.env.WORLD_TRADING_DATA_API_KEY;
-    this._startDate = '2016-01-01';
+    this._startDate = '2018-01-01';
   }
 
   async getFullHistoryBySymbol(stockSymbol: string) {
