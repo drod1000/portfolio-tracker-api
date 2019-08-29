@@ -10,7 +10,14 @@ export default (app) => {
   app.use('/watchlist', router);
 
   router.get('/', (req, res) => {
-    res.send('Watchlists');
+    const watchlistStockService: WatchlistStockService = Container.get(WatchlistStockService);
+    watchlistStockService.getWatchlist()
+      .then(watchlist => res.status(200).send(watchlist))
+      .catch(error => {
+        res.status(400).send({
+          message: `Something went wrong: ${error}`
+        });
+      });
   });
 
   // TODO: Add async middleware to make this more readable

@@ -13,13 +13,6 @@ class StockPositionRepository {
     return result;
   }
 
-  // async getAllStockPositions() {
-  //   const result = this._knex('StockPosition')
-  //     .join('Stock', 'StockPosition.StockId', 'Stock.StockId')
-  //     .select('*')
-
-  //   return result;
-  // }
   async getAllStockPositions() {
     const result = this._knex.raw(
       ` SELECT

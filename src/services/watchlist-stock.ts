@@ -20,6 +20,13 @@ class WatchlistStockService {
   @Inject()
   private _worldTradingDataService: WorldTradingDataService;
 
+  async getWatchlist() {
+    const rawResult = await this._watchlistStockRepository.getWatchlist();
+    // Raw returns additional data
+    const [result] = rawResult;
+    return result;
+  }
+
   async addWatchlistStock(inputDto: PostAddWatchlistStock) {
     let stockId: number;
     let currentPrice: number;
