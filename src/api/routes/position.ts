@@ -9,7 +9,14 @@ export default (app: Router) => {
   app.use('/positions', router);
 
   router.get('/', (req: Request, res: Response) => {
-    res.send("Positions");
+    const stockPositionService: StockPositionService = Container.get(StockPositionService);
+    stockPositionService.getAllStockPositions()
+      .then(positions => res.status(200).send(positions))
+      .catch(error => {
+        res.status(400).send({
+          message: `Something went wrong: ${error}`
+        });
+      });
   });
 
   // TODO: Add async middleware to make this more readable

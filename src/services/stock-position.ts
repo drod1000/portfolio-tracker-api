@@ -20,6 +20,13 @@ class StockPositionService {
   @Inject()
   private _worldTradingDataService: WorldTradingDataService;
 
+  async getAllStockPositions() {
+    const rawResult = await this._stockPositionRepository.getAllStockPositions();
+    // Raw returns additional data
+    const [result] = rawResult;
+    return result;
+  }
+
   async addStockPosition(inputDto: PostAddStockPosition) {
     let stockId: number;
     let currentPrice: number;
