@@ -1,6 +1,7 @@
 import { Service, Inject } from 'typedi';
 
 import StockPositionInsert from '../dtos/stock-position-insert';
+import { StockPositionCloseUpdate } from '../dtos';
 
 @Service()
 class StockPositionRepository {
@@ -28,6 +29,26 @@ class StockPositionRepository {
         ) sh ON sp.StockId=sh.StockId
       `
     );
+
+    return result;
+  }
+
+  async getStockPositionByPositionId(positionId: number) {
+    const result = this._knex('StockPosition')
+      .where('PositionId', positionId)
+      .first();
+
+    return result;
+  }
+
+  async closeStockPositionUpdate(dto: StockPositionCloseUpdate) {
+    const result = this._knex('StockPosition')
+      .where('PositionId', dto.PositionId)
+      .update({
+        Quantity: dto.Quantity,
+        SellDate: dto.SellDate,
+        SellPrice: dto.SellPrice
+      });
 
     return result;
   }

@@ -27,7 +27,7 @@ class WatchlistStockService {
     return result;
   }
 
-  async addWatchlistStock(inputDto: PostAddWatchlistStock) {
+  async addWatchlistStock(inputDto: PostAddWatchlistStock): Promise<PostAddWatchlistStockResult> {
     let stockId: number;
     let currentPrice: number;
     const stock = await this._stockRepository.getStockBySymbol(inputDto.StockSymbol);

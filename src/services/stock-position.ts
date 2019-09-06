@@ -6,7 +6,10 @@ import {
   PostAddStockPositionResult,
   PostAddStockPosition,
   StockHistoryInsert,
-  StockPositionInsert
+  StockPositionInsert,
+  PostClosePosition,
+  StockPositionCloseUpdate,
+  PostClosePositionResult
 } from '../db/dtos';
 
 @Service()
@@ -27,7 +30,7 @@ class StockPositionService {
     return result;
   }
 
-  async addStockPosition(inputDto: PostAddStockPosition) {
+  async addStockPosition(inputDto: PostAddStockPosition): Promise<PostAddStockPositionResult> {
     let stockId: number;
     let currentPrice: number;
     const stock = await this._stockRepository.getStockBySymbol(inputDto.StockSymbol);
@@ -56,6 +59,25 @@ class StockPositionService {
       BuyDate: inputDto.BuyDate,
       BuyPrice: inputDto.BuyPrice,
       CurrentPrice: currentPrice
+    };
+
+    return new Promise(resolve => resolve(result));
+  }
+
+  async closePosition(inputDto: PostClosePosition): Promise<PostClosePositionResult> {
+    const stockPosition = await this._stockPositionRepository.getStockPositionByPositionId(inputDto.PositionId);
+
+    const stockPositionUpdateDto: StockPositionCloseUpdate = {
+      PositionId: stockPosition.PositionId,
+      Quantity: stockPosition.Quantity - inputDto.Quantity,
+      SellDate: inputDto.SellDate.toString(),
+      SellPrice: inputDto.SellPrice
+    };
+    await this._stockPositionRepository.closeStockPositionUpdate(stockPositionUpdateDto);
+
+    const result: PostClosePositionResult = {
+      PositionId: stockPosition.PositionId,
+      Quantity: stockPositionUpdateDto.Quantity
     };
 
     return new Promise(resolve => resolve(result));
