@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
+import { Container } from 'typedi';
 
-import WorldTradingDataService from '../../services/world-trading-data';
+import StockHistoryService from '../../services/stock-history';
 
 const router = Router();
 
@@ -8,29 +9,18 @@ export default (app: Router) => {
   app.use('/stock', router);
 
   // TODO: Move this to a job
-  router.get('/single-day-history', (req: Request, res: Response) => {
-    // TODO: Get from Stock DB;
-    const symbols = ["AAPL", "WFC", "DIS", "TGT", "WM"];
-    const worldTradingData = new WorldTradingDataService();
-
-    worldTradingData.getMultipleSingleDayHistory(symbols, req.query.date)
-      .then(data => {
-        const responseContent = Object.keys(data)
-          .map(symbol => {
-            return {
-              Symbol: symbol,
-              Price: data[symbol].close
-            };
-          });
-
+  router.get('/refresh-all', (req: Request, res: Response) => {
+    const stockHistoryService: StockHistoryService = Container.get(StockHistoryService);
+    stockHistoryService.refreshAll()
+      .then(result => {
         res.status(200).send({
-          data: responseContent
+          message: "Success!"
         });
       })
       .catch(error => {
         res.status(400).send({
-          message: "Unable to retrieve data for date provided. Please confirm the market was open on that day."
-        })
-      })
+          message: `Something went wrong: ${error}`
+        });
+      });
   });
 }
