@@ -1,6 +1,7 @@
 import axios from 'axios';
 import chunk from 'lodash/chunk';
 import reduce from 'lodash/reduce';
+import moment from 'moment';
 import { Service } from 'typedi';
 require('dotenv').config();
 
@@ -18,6 +19,12 @@ class WorldTradingDataService {
 
   async getFullHistoryBySymbol(stockSymbol: string) {
     const response = await axios.get(`${this._urlPrefix}/history?symbol=${stockSymbol}&date_from=${this._startDate}&sort=oldest&api_token=${this._apiToken}`);
+    return response.data.history;
+  }
+
+  async getFullHistoryBySymbolAndStartDate(stockSymbol: string, startDate: Date) {
+    const formattedStartDate = moment(startDate).format('YYYY-MM-DD');
+    const response = await axios.get(`${this._urlPrefix}/history?symbol=${stockSymbol}&date_from=${formattedStartDate}&sort=oldest&api_token=${this._apiToken}`);
     return response.data.history;
   }
 
