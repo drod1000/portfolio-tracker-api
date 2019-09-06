@@ -5,9 +5,11 @@ import PostAddWatchlistStock from './post-add-watchlist-stock';
 import StockHistoryInsert from './stock-history-insert';
 import StockPositionInsert from './stock-position-insert';
 import WatchlistStockInsert from './watchlist-stock-insert';
+import StockHistoryRefresh from './stock-history-refresh';
 
 export {
   PostAddStockPositionResult, PostAddStockPosition,
   PostAddWatchlistStockResult, PostAddWatchlistStock,
-  StockHistoryInsert, StockPositionInsert, WatchlistStockInsert
+  StockHistoryInsert, StockPositionInsert, WatchlistStockInsert,
+  StockHistoryRefresh
 }
