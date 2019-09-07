@@ -34,7 +34,7 @@ export default (app: Router) => {
   router.post('/close', (req: Request, res: Response) => {
     const stockPositionService: StockPositionService = Container.get(StockPositionService);
     stockPositionService.closePosition(req.body)
-      .then(closeResult => res.status(201).send(closeResult))
+      .then(closeResult => res.status(200).send(closeResult))
       .catch(error => {
         res.status(400).send({
           message: `Something went wrong: ${error}`
