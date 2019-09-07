@@ -4,6 +4,4 @@ export interface StockPosition {
   Quantity: number;
   BuyDate: Date;
   BuyPrice: number;
-  SellDate?: Date;
-  SellPrice?: number;
 }
