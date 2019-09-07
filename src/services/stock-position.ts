@@ -1,12 +1,15 @@
 import { Service, Inject } from 'typedi';
 
-import { StockRepository, StockHistoryRepository, StockPositionRepository } from '../db/repositories';
+import { StockRepository, StockHistoryRepository, StockPositionRepository, StockSaleRepository } from '../db/repositories';
 import WorldTradingDataService from './world-trading-data';
 import {
   PostAddStockPositionResult,
   PostAddStockPosition,
   StockHistoryInsert,
-  StockPositionInsert
+  StockPositionInsert,
+  PostClosePosition,
+  PostClosePositionResult,
+  StockSaleInsert
 } from '../db/dtos';
 
 @Service()
@@ -18,16 +21,18 @@ class StockPositionService {
   @Inject()
   private _stockPositionRepository: StockPositionRepository;
   @Inject()
+  private _stockSaleRepository: StockSaleRepository;
+  @Inject()
   private _worldTradingDataService: WorldTradingDataService;
 
   async getAllStockPositions() {
     const rawResult = await this._stockPositionRepository.getAllStockPositions();
     // Raw returns additional data
     const [result] = rawResult;
-    return result;
+    return result.filter(p => p.Quantity > 0);
   }
 
-  async addStockPosition(inputDto: PostAddStockPosition) {
+  async addStockPosition(inputDto: PostAddStockPosition): Promise<PostAddStockPositionResult> {
     let stockId: number;
     let currentPrice: number;
     const stock = await this._stockRepository.getStockBySymbol(inputDto.StockSymbol);
@@ -56,6 +61,33 @@ class StockPositionService {
       BuyDate: inputDto.BuyDate,
       BuyPrice: inputDto.BuyPrice,
       CurrentPrice: currentPrice
+    };
+
+    return new Promise(resolve => resolve(result));
+  }
+
+  async closePosition(inputDto: PostClosePosition): Promise<PostClosePositionResult> {
+    const stockPosition = await this._stockPositionRepository.getStockPositionByPositionId(inputDto.PositionId);
+
+    const newQuantity = stockPosition.Quantity - inputDto.Quantity;
+
+    if (newQuantity < 0) {
+      const rejection = Promise.reject("Sale quantity cannot be greater than position quantity.");
+      return rejection;
+    }
+
+    const stockSaleInsert: StockSaleInsert = {
+      StockId: stockPosition.StockId,
+      PositionId: stockPosition.PositionId,
+      Quantity: inputDto.Quantity,
+      SellDate: inputDto.SellDate.toString(),
+      SellPrice: inputDto.SellPrice
+    };
+    await this._stockSaleRepository.insertStockSale(stockSaleInsert);
+
+    const result: PostClosePositionResult = {
+      PositionId: stockPosition.PositionId,
+      Quantity: newQuantity
     };
 
     return new Promise(resolve => resolve(result));
