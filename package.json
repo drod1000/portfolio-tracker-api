@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/drod1000/portfolio-tracker-api#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "@types/cors": "^2.8.6",
     "axios": "^0.19.0",
     "body-parser": "^1.19.0",

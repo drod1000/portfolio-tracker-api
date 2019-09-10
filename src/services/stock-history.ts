@@ -26,6 +26,10 @@ class StockHistoryService {
     const startDate = moment(stock.RecordDate).add(1, 'days');
     const stockHistory = await this._worldTradingDataService.getFullHistoryBySymbolAndStartDate(stock.StockSymbol, startDate.toDate());
 
+    if (!stockHistory) {
+      return new Promise(resolve => resolve(true));
+    }
+
     const stockHistoryInsert: StockHistoryInsert[] = Object.keys(stockHistory).map(date => {
       return {
         StockId: stock.StockId,
