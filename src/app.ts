@@ -2,6 +2,7 @@ import express from 'express';
 import "reflect-metadata";
 import { Container } from 'typedi/Container';
 
+import automationInitializer from './initializers/automation-initializer';
 import DailyUpdateService from './services/daily-update';
 
 async function startServer() {
@@ -14,10 +15,10 @@ async function startServer() {
 }
 
 async function dailyUpdate() {
-  const app = express();
-  await require('./initializers').default({ expressApp: app });
+  await require('./initializers/automation-initializer').default();
 
   const dailyUpdateService = Container.get(DailyUpdateService);
+
   console.log("Sending update");
   await dailyUpdateService.sendDailyUpdate();
 
