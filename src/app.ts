@@ -13,7 +13,7 @@ async function startServer() {
   });
 }
 
-async function refreshOnly() {
+async function dailyUpdate() {
   const app = express();
   await require('./initializers').default({ expressApp: app });
 
@@ -25,10 +25,10 @@ async function refreshOnly() {
   process.exit();
 }
 
-const isRefresh = process.argv.find(arg => arg === "refresh");
+const isDailyUpdate = process.argv.find(arg => arg === "daily-update");
 
-if(isRefresh) {
-  refreshOnly();
+if(isDailyUpdate) {
+  dailyUpdate();
 } else {
   startServer();
 }
